@@ -1,103 +1,333 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Allura&display=swap" rel="stylesheet">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Important Information</title>
-    <style>
-        html, body {
-            padding: 0;
-            margin: 0;
-            background-color: rgb(27, 27, 27);
-            text-align: center;
-        }
-        .head {
-            width: 100%;
-            height: 5vh;
-            position: absolute;
-            top: 0;
-            background-color: black;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Important Information</title>
 
-        .infobox {
-            display: flex;
-            flex-direction: row;
-            height: 100vh;
-            width: 100vw;
-            align-items: center;
-            justify-content: center;
-        }
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Allura&display=swap" rel="stylesheet" />
 
-        .info {
-            height: 80%;
-            width: 30%;
-            background-color: rgb(23, 23, 23);
-            margin: 0 1vw 0 1vw;
-            border-radius: 15px;
-            box-shadow: 2px 8px black;
-            transition: 400ms ease;
-            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-            color: rgb(255, 200, 251);
-        }
+  <!-- Styles -->
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      background-color: rgb(27, 27, 27);
+      font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+      color: rgb(255, 200, 251);
+      text-align: center;
+    }
 
-        .info:hover {
-            box-shadow: 4px 12px black;
-        }
+    h1, h2 {
+      font-family: "Allura", cursive;
+      font-weight: 800;
+      font-style: normal;
+      color: palevioletred;
+      text-shadow: 8px 8px 25px palevioletred, -8px -8px 25px palevioletred,
+                   8px -8px 25px palevioletred, -8px 8px 25px palevioletred;
+      margin: 0;
+    }
 
-        h1 {
-            font-family: "Allura", cursive;
-            font-weight: 800;
-            font-size: 50px;
-            padding: 0;
-            margin: 0;
-            font-style: normal;
-            color: palevioletred;
-            text-shadow: 8px 8px 25px palevioletred, -8px -8px 25px palevioletred, 8px -8px 25px palevioletred, -8px 8px 25px palevioletred;
-        }
+    h1 {
+      font-size: 50px;
+    }
 
-        h2 {
-            font-family: "Allura", cursive;
-            font-weight: 800;
-            font-size: 35px;
-            padding: 0;
-            margin: 0;
-            font-style: normal;
-            color: palevioletred;
-            text-shadow: 8px 8px 25px palevioletred, -8px -8px 25px palevioletred, 8px -8px 25px palevioletred, -8px 8px 25px palevioletred;
-        }
-    </style>
+    h2 {
+      font-size: 35px;
+      margin-bottom: 1vh;
+    }
+
+    a {
+      color: rgb(255, 200, 251);
+      text-decoration: underline;
+    }
+
+    .head {
+      position: absolute;
+      top: 0;
+      width: 100%;
+      height: 5vh;
+      background-color: black;
+    }
+
+    .infobox {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: row;
+      width: 100vw;
+      height: 100vh;
+      padding-top: 5vh;
+    }
+
+    .info {
+      width: 30%;
+      height: 80%;
+      margin: 0 1vw;
+      background-color: rgb(23, 23, 23);
+      border-radius: 15px;
+      box-shadow: 2px 8px black;
+      transition: box-shadow 400ms ease;
+      cursor: pointer;
+      padding: 1vh;
+    }
+
+    .info:hover {
+      box-shadow: 4px 12px black;
+    }
+
+    .footer-info {
+      width: 92vw;
+      margin: 5vh auto;
+      background-color: rgb(23, 23, 23);
+      border-radius: 15px;
+      box-shadow: 2px 8px black;
+      padding: 2vh;
+      transition: box-shadow 400ms ease;
+    }
+
+    .footer-info:hover {
+      box-shadow: 4px 12px black;
+    }
+
+    /* Overlay Styles */
+    .overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background: rgba(0, 0, 0, 0.6);
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+
+    .overlay.active {
+      display: flex;
+    }
+
+    .overlay-content {
+      background-color: rgb(23, 23, 23);
+      color: rgb(255, 200, 251);
+      padding: 2em;
+      border-radius: 15px;
+      max-width: 600px;
+      max-height: 80vh;
+      overflow-y: auto;
+      box-shadow: 0 0 30px rgba(255, 200, 251, 0.3);
+      position: relative;
+      text-align: left;
+      font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 20px;
+      background: none;
+      border: none;
+      color: palevioletred;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .close-btn:hover {
+      color: rgb(255, 150, 200);
+    }
+    #refresh-btn, #loadmore-btn {
+      background-color: #2e2e2e;
+      color: #f0f0f0;
+      border: none;
+      padding: 0.6em 1.4em;
+      font-size: 1.05rem;
+      font-family: 'Segoe UI', sans-serif;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+      cursor: pointer;
+      transition: background-color 0.2s ease, transform 0.1s ease;
+      margin: 0.5vh auto;
+    }
+
+    #refresh-btn:hover, #loadmore-btn:hover {
+      background-color: #3a3a3a;
+      transform: translateY(-1px);
+    }
+
+    .overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+    }
+
+    .overlay.active {
+      display: flex;
+    }
+
+    .overlay-content {
+      background-color: #1a1a1a;
+      color: #fff;
+      padding: 2em;
+      border-radius: 16px;
+      position: relative;
+      width: 60%;
+      max-width: 600px;
+      font-family: 'Segoe UI', sans-serif;
+      overflow: hidden;
+    }
+
+    .animated-border::before {
+      content: '';
+      position: absolute;
+      top: -4px; left: -4px;
+      right: -4px; bottom: -4px;
+      border-radius: 20px;
+      background: conic-gradient(from 0deg, white 0%, pink 25%, white 50%, pink 75%, white 100%);
+      animation: spin 4s linear infinite;
+      z-index: -1;
+    }
+
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 10px; right: 10px;
+      background: transparent;
+      color: #fff;
+      border: none;
+      font-size: 1.2rem;
+      cursor: pointer;
+    }
+
+  </style>
 </head>
 <body>
-    <div class="head">
-        <h1 class="title">Important Stuff</h1>
-    </div>
-    <div class="main">
-        <div class="infobox">
-            <div class="info">
-                <h2>Important Guides</h2>
-                <p>
-                    <a href="https://docs.titaniumnetwork.org/kajigs/downgrading/">Downgrading</a> <br> (May or may not work)
-                </p>
-                <br>
-                <p>
-                    <a href="https://discord.com/channels/419123358698045453/1291174869404225638">DAUB</a> <br> Update Blocker
-                </p>
+  <div class="head">
+    <h1 class="title">Important Stuff</h1>
+  </div>
 
-
-            </div>
-            <div class="info">
-                <h2>Important Tools</h2>
-                <p>
-                    <a href="https://luphoria.com/netlog-policy-password-tool.html">Wifi Password Getter</a>
-                </p>
-            </div>
-            <div class="info">
-                <h2>Important Links</h2>
-            </div>
-        </div>
+  <div class="main">
+    <div class="infobox">
+      <div class="info">
+        <h2>Important Guides</h2>
+        <p>
+          <a href="https://docs.titaniumnetwork.org/kajigs/downgrading/">Downgrading</a><br>(May or may not work)
+        </p>
+        <p>
+          <a href="https://discord.com/channels/419123358698045453/1291174869404225638">DAUB</a><br>Update Blocker
+        </p>
+      </div>
+      <div class="info">
+        <h2>Important Tools</h2>
+        <p>
+          <a href="https://luphoria.com/netlog-policy-password-tool.html">Wifi Password Getter</a>
+        </p>
+      </div>
+      <div class="info">
+        <h2>Important Links</h2>
+        <p>More coming soon...</p>
+      </div>
     </div>
+
+    <div class="footer-info">
+      <h2>Suggestions From Hipposite</h2>
+      <button id="refresh-btn" onclick="refreshSuggestions()">🔄 Refresh</button>
+      <div id="suggestions-grid" style="
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1vw;
+        max-height: 80vh;
+        overflow-y: auto;
+        padding: 1vh;
+      "></div>
+      <div style="text-align: center; margin-top: 1vh;">
+        <button id="loadmore-btn" onclick="loadMoreSuggestions()" style="display: none;">➕ Load More</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Overlay Modal -->
+  <div id="overlay" class="overlay">
+    <div class="overlay-content animated-border">
+      <button class="close-btn" onclick="hideOverlay()">[X]</button>
+      <div id="overlay-meta" style="margin-bottom: 1em; font-weight: bold;"></div>
+      <p id="overlay-fulltext"></p>
+    </div>
+  </div>
+
+  <script>
+  const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyRZT0Tp1QttwVbfeAmg4Ady2AcXxuyAovSnHpc9oQNHdfxIYw15VtT1xCb1D7C93PZrQ/exec";
+  let allSuggestions = [];
+  let visibleCount = 0;
+  const batchSize = 20;
+
+  function refreshSuggestions() {
+    const grid = document.getElementById('suggestions-grid');
+    const loadMoreBtn = document.getElementById('loadmore-btn');
+    grid.innerHTML = '<p style="width:100%; text-align:center; font-size:1.2rem;">Loading, please wait...</p>';
+    visibleCount = 0;
+    loadMoreBtn.style.display = 'none';
+
+    fetch(WEB_APP_URL)
+      .then(res => res.json())
+      .then(data => {
+        allSuggestions = data.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+        grid.innerHTML = '';
+        if (allSuggestions.length > batchSize) {
+          loadMoreBtn.style.display = 'inline-block';
+        }
+        loadMoreSuggestions();
+      });
+  }
+
+  function loadMoreSuggestions() {
+    const grid = document.getElementById('suggestions-grid');
+    const nextBatch = allSuggestions.slice(visibleCount, visibleCount + batchSize);
+
+    nextBatch.forEach(({ timestamp, contact, suggestion }) => {
+      const preview = suggestion.length > 100 ? suggestion.slice(0, 100) + '...' : suggestion;
+
+      const box = document.createElement('div');
+      box.className = 'info';
+      box.style.flex = '1 1 calc(22% - 1vw)';
+      box.style.maxWidth = '22%';
+      box.style.minWidth = '180px';
+      box.style.minHeight = '60px';
+      box.style.height = 'auto';
+      box.innerHTML = `<strong>[${timestamp}] / ${contact}</strong><br>${preview}`;
+      box.onclick = () => showOverlay(timestamp, contact, suggestion);
+      grid.appendChild(box);
+    });
+
+    visibleCount += batchSize;
+
+    if (visibleCount >= allSuggestions.length) {
+      document.getElementById('loadmore-btn').style.display = 'none';
+    }
+  }
+
+  function showOverlay(timestamp, contact, fullText) {
+    document.getElementById('overlay-meta').textContent = `[${timestamp}] / ${contact}`;
+    document.getElementById('overlay-fulltext').textContent = fullText;
+    document.getElementById('overlay').classList.add('active');
+  }
+
+  function hideOverlay() {
+    document.getElementById('overlay').classList.remove('active');
+  }
+
+  refreshSuggestions();
+</script>
 </body>
 </html>
