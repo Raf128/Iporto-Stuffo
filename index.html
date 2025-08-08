@@ -32,17 +32,23 @@
     }
 
     h1 {
-      font-size: 50px;
+      font-size: 5vh;
     }
 
     h2 {
-      font-size: 35px;
+      font-size: 4vh;
       margin-bottom: 1vh;
     }
 
     a {
-      color: rgb(255, 200, 251);
+      color: rgb(255, 165, 249);
       text-decoration: underline;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 2vh;
+    }
+
+    p {
+        font-size: 2vh;
     }
 
     .head {
@@ -59,7 +65,7 @@
       align-items: center;
       flex-direction: row;
       width: 100vw;
-      height: 100vh;
+      height: 60vh;
       padding-top: 5vh;
     }
 
@@ -221,22 +227,15 @@
     <div class="infobox">
       <div class="info">
         <h2>Important Guides</h2>
-        <p>
-          <a href="https://docs.titaniumnetwork.org/kajigs/downgrading/">Downgrading</a><br>(May or may not work)
-        </p>
-        <p>
-          <a href="https://discord.com/channels/419123358698045453/1291174869404225638">DAUB</a><br>Update Blocker
-        </p>
+        <div id="guides"></div>
       </div>
       <div class="info">
-        <h2>Important Tools</h2>
-        <p>
-          <a href="https://luphoria.com/netlog-policy-password-tool.html">Wifi Password Getter</a>
-        </p>
+          <h2>Important Tools</h2>
+          <div id="tools"></div>
       </div>
       <div class="info">
         <h2>Important Links</h2>
-        <p>More coming soon...</p>
+        <div id="links"></div>
       </div>
     </div>
 
@@ -265,7 +264,7 @@
       <p id="overlay-fulltext"></p>
     </div>
   </div>
-
+  <script src="info.js"></script>
   <script>
   const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyRZT0Tp1QttwVbfeAmg4Ady2AcXxuyAovSnHpc9oQNHdfxIYw15VtT1xCb1D7C93PZrQ/exec";
   let allSuggestions = [];
@@ -328,6 +327,31 @@
   }
 
   refreshSuggestions();
+
+const guidesInfo = document.getElementById("guides");
+const toolsInfo = document.getElementById("tools");
+const linksInfo = document.getElementById("links");
+
+infoData.forEach(infoLink => {
+    let linkHTML = `
+    <p> <a href="${infoLink.link}"> ${infoLink.linkText}</a>
+    <br>
+    ${infoLink.otherContent}
+    </p>
+    `
+    console.log(infoLink.type);
+    if (infoLink.type === "tool") {
+        toolsInfo.innerHTML += linkHTML;
+    } else if (infoLink.type === "guide") {
+        guidesInfo.innerHTML += linkHTML;
+    } else if (infoLink.type === "link") {
+        linksInfo.innerHTML += linkHTML;
+    } else {
+        linksInfo.innerHTML = "Error Loading Json Data";
+        guidesInfo.innerHTML = "Error Loading Json Data";
+        toolsInfo.innerHTML = "Error Loading Json Data";
+    }
+});
 </script>
 </body>
 </html>
